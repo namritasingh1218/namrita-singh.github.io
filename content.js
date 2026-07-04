@@ -61,7 +61,7 @@ WHERE   expertise IN ('SQL', 'Power BI', 'Python')
       'Data Validation',
     ],
     photo: {
-      src: 'images/Profile_Image.jpeg',
+      src: 'public/Profile_Image.jpeg' || '/Profile_Image.jpeg',
       alt: 'Namrita Singh',
     },
     contacts: [

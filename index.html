@@ -25,14 +25,7 @@
       <span class="nav-logo-pip" aria-hidden="true"></span>
     </a>
 
-    <nav class="nav-links" aria-label="Primary navigation">
-      <a href="#about"      class="nav-link" data-section="about">About</a>
-      <a href="#skills"     class="nav-link" data-section="skills">Skills</a>
-      <a href="#experience" class="nav-link" data-section="experience">Experience</a>
-      <a href="#projects"   class="nav-link" data-section="projects">Projects</a>
-      <a href="#education"  class="nav-link" data-section="education">Education</a>
-      <a href="#contact"    class="nav-link nav-cta" data-section="contact">Let's Talk</a>
-    </nav>
+    <nav class="nav-links" aria-label="Primary navigation" id="navLinks"></nav>
 
     <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -40,14 +33,7 @@
   </div>
 
   <!-- Mobile drawer -->
-  <div class="nav-drawer" id="navDrawer" aria-hidden="true">
-    <a href="#about"      class="drawer-link">About</a>
-    <a href="#skills"     class="drawer-link">Skills</a>
-    <a href="#experience" class="drawer-link">Experience</a>
-    <a href="#projects"   class="drawer-link">Projects</a>
-    <a href="#education"  class="drawer-link">Education</a>
-    <a href="#contact"    class="drawer-link">Let's Talk</a>
-  </div>
+  <div class="nav-drawer" id="navDrawer" aria-hidden="true"></div>
 </header>
 
 
@@ -60,19 +46,16 @@
 
   <div class="hero-body">
 
-    <p class="hero-status">
+    <p class="hero-status" id="heroStatus">
       <span class="hero-dot" aria-hidden="true"></span>
-      Available for new opportunities
     </p>
 
     <h1 class="hero-name">
-      <span class="hero-name-solid">Namrita</span>
-      <span class="hero-name-outline">Singh</span>
+      <span class="hero-name-solid" id="heroNameSolid"></span>
+      <span class="hero-name-outline" id="heroNameOutline"></span>
     </h1>
 
-    <p class="hero-sub">
-      Data Analyst &nbsp;·&nbsp; SQL &nbsp;·&nbsp; Power BI &nbsp;·&nbsp; Python &nbsp;·&nbsp; Azure
-    </p>
+    <p class="hero-sub" id="heroSub"></p>
 
     <!--
       ╔══════════════════════════════════════════════╗
@@ -93,22 +76,13 @@
         <pre class="t-code" id="tCode"><span class="t-cursor" aria-hidden="true">▊</span></pre>
         <div class="t-results" id="tResults">
           <div class="t-divider" aria-hidden="true"></div>
-          <div class="t-row"><span class="t-key">name</span><span class="t-arr" aria-hidden="true">→</span><span class="t-val">Namrita Singh</span></div>
-          <div class="t-row"><span class="t-key">role</span><span class="t-arr" aria-hidden="true">→</span><span class="t-val">Data Analyst</span></div>
-          <div class="t-row"><span class="t-key">experience</span><span class="t-arr" aria-hidden="true">→</span><span class="t-val">3+ years @ Cognizant</span></div>
-          <div class="t-row"><span class="t-key">education</span><span class="t-arr" aria-hidden="true">→</span><span class="t-val">M.Sc. Statistics · 9.0 CGPA</span></div>
-          <div class="t-row"><span class="t-key">status</span><span class="t-arr" aria-hidden="true">→</span><span class="t-val t-val--active"><span class="t-active-dot" aria-hidden="true"></span>OPEN TO WORK</span></div>
-          <p class="t-meta" aria-label="Query returned 5 rows">5 rows returned · 0 errors</p>
+          <div id="tRowsContainer"></div>
+          <p class="t-meta" id="tMeta" aria-label="Query returned 5 rows"></p>
         </div>
       </div>
     </div>
 
-    <div class="hero-cta">
-      <a href="#projects" class="btn btn-solid">View Projects</a>
-      <a href="#contact"  class="btn btn-border">Get in Touch</a>
-      <!-- REPLACE: Update href to your actual resume PDF path -->
-      <a href="namrita-singh-resume.pdf" class="btn btn-ghost" download>Resume ↓</a>
-    </div>
+    <div class="hero-cta" id="heroCtas"></div>
 
   </div><!-- /hero-body -->
 
@@ -129,66 +103,22 @@
       <!-- Left column: photo + key metrics -->
       <aside class="about-aside">
         <div class="photo-frame">
-          <!--
-            ╔══════════════════════════════════════════════╗
-            ║  PHOTO PLACEHOLDER                           ║
-            ║  To add your photo:                          ║
-            ║  1. Delete the <div class="photo-ph"> block  ║
-            ║  2. Uncomment the <img> tag below            ║
-            ║  3. Update src to your image path            ║
-            ╚══════════════════════════════════════════════╝
-          -->
-          <div class="photo-ph">
-            <span class="photo-initials">NS</span>
-            <span class="photo-hint">Add photo here</span>
-          </div>
-          <!-- <img src="assets/namrita-photo.jpg" alt="Namrita Singh" class="photo-img"> -->
+          <img id="profilePhoto" class="photo-img" src="" alt="" />
         </div>
 
-        <div class="about-metrics">
-          <div class="metric">
-            <span class="metric-num" data-count="3" data-suffix="+">0+</span>
-            <span class="metric-lbl">Years experience</span>
-          </div>
-          <div class="metric">
-            <span class="metric-num" data-count="9" data-suffix=".0">0</span>
-            <span class="metric-lbl">M.Sc. CGPA</span>
-          </div>
-          <div class="metric">
-            <span class="metric-num" data-count="9" data-suffix="+">0+</span>
-            <span class="metric-lbl">Projects built</span>
-          </div>
-        </div>
+        <div class="about-metrics" id="aboutMetrics"></div>
       </aside>
 
       <!-- Right column: bio text -->
       <div class="about-main">
-        <p class="eyebrow">About</p>
-        <h2 class="sec-heading">Turning raw data<br>into <em>clear decisions</em></h2>
+        <p class="eyebrow" id="aboutEyebrow"></p>
+        <h2 class="sec-heading" id="aboutHeading"></h2>
 
-        <p class="about-bio about-bio--lead">
-          I'm a Data Analyst with 3+ years of experience at Cognizant Technology Solutions and a strong academic foundation in Statistics — M.Sc. and B.Sc. both at 9.0 CGPA from Aligarh Muslim University.
-        </p>
-        <p class="about-bio">
-          My work spans monitoring Azure Data Factory pipelines and Dynatrace alerts, building Power BI dashboards that inform weekly client decisions, and writing SQL to uncover operational trends at scale. Every dataset I work with is a problem to be structured and a story to be told.
-        </p>
-        <p class="about-bio">
-          Actively seeking Data Analyst opportunities where analytical precision and clear communication translate directly into business value.
-        </p>
+        <div id="aboutBio"></div>
 
-        <div class="pill-group">
-          <span class="pill">Data Storytelling</span>
-          <span class="pill">KPI Monitoring</span>
-          <span class="pill">Dashboard Design</span>
-          <span class="pill">Statistical Analysis</span>
-          <span class="pill">Business Reporting</span>
-          <span class="pill">Data Validation</span>
-        </div>
+        <div class="pill-group" id="aboutPills"></div>
 
-        <div class="about-contacts">
-          <a href="mailto:namritasingh1218@gmail.com" class="contact-chip">namritasingh1218@gmail.com</a>
-          <a href="tel:+917037036551" class="contact-chip">+91 7037036551</a>
-        </div>
+        <div class="about-contacts" id="aboutContacts"></div>
       </div>
 
     </div>
@@ -221,57 +151,7 @@
       </div>
 
       <!-- Skill categories with progress bars -->
-      <div class="cats-col">
-
-        <div class="skill-cat" data-reveal>
-          <h3 class="cat-name">Data Analysis &amp; Visualization</h3>
-          <div class="cat-tags">
-            <span class="stag stag--hi">Power BI</span>
-            <span class="stag stag--hi">DAX</span>
-            <span class="stag">KPIs</span>
-            <span class="stag">Dashboards</span>
-            <span class="stag">Excel</span>
-          </div>
-          <div class="sbar-track"><div class="sbar-fill" data-pct="90"></div></div>
-        </div>
-
-        <div class="skill-cat" data-reveal>
-          <h3 class="cat-name">Databases &amp; Querying</h3>
-          <div class="cat-tags">
-            <span class="stag stag--hi">SQL Server</span>
-            <span class="stag stag--hi">MySQL</span>
-            <span class="stag">CTEs</span>
-            <span class="stag">Window Functions</span>
-            <span class="stag">Joins</span>
-          </div>
-          <div class="sbar-track"><div class="sbar-fill" data-pct="85"></div></div>
-        </div>
-
-        <div class="skill-cat" data-reveal>
-          <h3 class="cat-name">Programming</h3>
-          <div class="cat-tags">
-            <span class="stag stag--hi">Python</span>
-            <span class="stag">Pandas</span>
-            <span class="stag">NumPy</span>
-            <span class="stag">Matplotlib</span>
-            <span class="stag">R</span>
-          </div>
-          <div class="sbar-track"><div class="sbar-fill" data-pct="80"></div></div>
-        </div>
-
-        <div class="skill-cat" data-reveal>
-          <h3 class="cat-name">Cloud &amp; Tools</h3>
-          <div class="cat-tags">
-            <span class="stag stag--hi">Azure Data Factory</span>
-            <span class="stag">Azure Data Lake</span>
-            <span class="stag">Dynatrace</span>
-            <span class="stag">ServiceNow</span>
-            <span class="stag">GitHub</span>
-          </div>
-          <div class="sbar-track"><div class="sbar-fill" data-pct="75"></div></div>
-        </div>
-
-      </div><!-- /cats-col -->
+      <div class="cats-col" id="skillCats"></div><!-- /cats-col -->
     </div><!-- /skills-layout -->
   </div>
 </section>
@@ -293,86 +173,12 @@
       as horizontal bars across a shared time axis.
     -->
     <div class="gantt-wrap">
-      <p class="gantt-lbl">Jul 2022 → Present · career progression timeline</p>
+      <p class="gantt-lbl" id="ganttLabel"></p>
       <div class="gantt-chart" id="ganttChart" aria-label="Career timeline Gantt chart"></div>
     </div>
 
     <!-- Experience cards -->
-    <div class="exp-list">
-
-      <article class="exp-item exp-item--current" data-reveal>
-        <div class="exp-meta">
-          <time class="exp-date">Oct 2024 — Present</time>
-          <span class="exp-loc">Gurugram, HR</span>
-        </div>
-        <div class="exp-content">
-          <h3 class="exp-role">Junior Software Engineer</h3>
-          <p class="exp-co">Cognizant Technology Solutions</p>
-          <p class="exp-desc">Analyzed Azure Data Factory pipeline logs, DLQ queues, and Dynatrace alerts to monitor data workflow health, identify incident patterns, and perform data validation — ensuring accuracy, reliability, and improved operational KPIs.</p>
-          <div class="pill-group pill-group--sm">
-            <span class="pill">Azure Data Factory</span>
-            <span class="pill">Dynatrace</span>
-            <span class="pill">Data Validation</span>
-            <span class="pill">KPI Monitoring</span>
-          </div>
-        </div>
-      </article>
-
-      <article class="exp-item" data-reveal>
-        <div class="exp-meta">
-          <time class="exp-date">Jul 2023 — Oct 2024</time>
-          <span class="exp-loc">Remote</span>
-        </div>
-        <div class="exp-content">
-          <h3 class="exp-role">Senior Systems Engineer</h3>
-          <p class="exp-co">Cognizant Technology Solutions</p>
-          <p class="exp-desc">Created and presented weekly performance dashboards and reports by analyzing incident and system data, identifying operational trends, and delivering data-driven insights for client decision-making.</p>
-          <div class="pill-group pill-group--sm">
-            <span class="pill">Power BI</span>
-            <span class="pill">Dashboard Design</span>
-            <span class="pill">Data Analytics</span>
-            <span class="pill">Client Reporting</span>
-          </div>
-        </div>
-      </article>
-
-      <article class="exp-item" data-reveal>
-        <div class="exp-meta">
-          <time class="exp-date">Mar 2023 — Jul 2023</time>
-          <span class="exp-loc">Remote</span>
-        </div>
-        <div class="exp-content">
-          <h3 class="exp-role">System Engineer</h3>
-          <p class="exp-co">Cognizant Technology Solutions</p>
-          <p class="exp-desc">Monitored website and application data for uptime and availability, performed large-scale data recertification and IFC control checks, and generated automated reports ensuring 100% data accuracy and compliance.</p>
-          <div class="pill-group pill-group--sm">
-            <span class="pill">Data Monitoring</span>
-            <span class="pill">IFC Controls</span>
-            <span class="pill">Automated Reports</span>
-            <span class="pill">Compliance</span>
-          </div>
-        </div>
-      </article>
-
-      <article class="exp-item" data-reveal>
-        <div class="exp-meta">
-          <time class="exp-date">Jul 2022 — Mar 2023</time>
-          <span class="exp-loc">Remote</span>
-        </div>
-        <div class="exp-content">
-          <h3 class="exp-role">Programmer Trainee</h3>
-          <p class="exp-co">Cognizant Technology Solutions</p>
-          <p class="exp-desc">Performed health checks across websites and applications ensuring uptime and availability. Monitored and validated job execution across SAP, Mainframe, and i90 environments.</p>
-          <div class="pill-group pill-group--sm">
-            <span class="pill">SAP Monitoring</span>
-            <span class="pill">Mainframe</span>
-            <span class="pill">Health Checks</span>
-            <span class="pill">Job Validation</span>
-          </div>
-        </div>
-      </article>
-
-    </div><!-- /exp-list -->
+    <div class="exp-list" id="expList"></div>
   </div>
 </section>
 
@@ -387,109 +193,7 @@
       <h2 class="sec-heading">Work that speaks<br><em>through data</em></h2>
     </div>
 
-    <div class="proj-grid">
-
-      <!-- SQL Projects -->
-      <article class="proj-card" data-reveal>
-        <div class="proj-thumb proj-thumb--sql">
-          <!--
-            REPLACE: Delete proj-thumb-ph and add screenshot:
-            <img src="assets/projects/sql-analysis.jpg" alt="SQL Analysis Projects">
-          -->
-          <div class="proj-thumb-ph">
-            <span class="proj-ph-label">SQL · Analysis</span>
-            <div class="proj-mini-bars" aria-hidden="true">
-              <div style="--h:55%"></div><div style="--h:82%"></div>
-              <div style="--h:42%"></div><div style="--h:95%"></div>
-              <div style="--h:67%"></div><div style="--h:78%"></div>
-            </div>
-          </div>
-          <span class="proj-badge">SQL</span>
-        </div>
-        <div class="proj-body">
-          <h3 class="proj-title">SQL Data Analysis</h3>
-          <p class="proj-desc">Advanced queries on real-world datasets — Domino's Pizza Sales and Netflix Movies &amp; TV Shows — using joins, CTEs, window functions, and time-based revenue analysis.</p>
-          <div class="pill-group pill-group--sm">
-            <span class="pill">SQL Server</span>
-            <span class="pill">CTEs</span>
-            <span class="pill">Window Functions</span>
-          </div>
-          <!-- REPLACE: Update href with your GitHub repository link -->
-          <a href="#" class="proj-link">View on GitHub <span class="proj-arr">→</span></a>
-        </div>
-      </article>
-
-      <!-- Power BI Projects -->
-      <article class="proj-card" data-reveal>
-        <div class="proj-thumb proj-thumb--bi">
-          <!--
-            REPLACE: Delete proj-thumb-ph and add screenshot:
-            <img src="assets/projects/powerbi-dashboards.jpg" alt="Power BI Dashboards">
-          -->
-          <div class="proj-thumb-ph">
-            <span class="proj-ph-label">Power BI · Dashboards</span>
-            <div class="proj-mini-donut" aria-hidden="true"></div>
-          </div>
-          <span class="proj-badge">Power BI</span>
-        </div>
-        <div class="proj-body">
-          <h3 class="proj-title">Interactive BI Dashboards</h3>
-          <p class="proj-desc">COVID-19 Global Impact, Global Retail Sales Insights, and Mobile Sales Performance dashboards — built with DAX, KPIs, drill-throughs, and dynamic slicers.</p>
-          <div class="pill-group pill-group--sm">
-            <span class="pill">Power BI</span>
-            <span class="pill">DAX</span>
-            <span class="pill">Drill-through</span>
-          </div>
-          <!-- REPLACE: Update href with your project link -->
-          <a href="#" class="proj-link">View Project <span class="proj-arr">→</span></a>
-        </div>
-      </article>
-
-      <!-- Python Projects -->
-      <article class="proj-card" data-reveal>
-        <div class="proj-thumb proj-thumb--py">
-          <!--
-            REPLACE: Delete proj-thumb-ph and add screenshot:
-            <img src="assets/projects/python-analytics.jpg" alt="Python Analytics">
-          -->
-          <div class="proj-thumb-ph">
-            <span class="proj-ph-label">Python · Analytics</span>
-            <svg class="proj-mini-line" viewBox="0 0 180 58" aria-hidden="true">
-              <polyline points="0,50 28,38 56,22 84,30 112,10 140,16 168,4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
-              <circle cx="168" cy="4" r="4" fill="currentColor"/>
-            </svg>
-          </div>
-          <span class="proj-badge">Python</span>
-        </div>
-        <div class="proj-body">
-          <h3 class="proj-title">Python Data Analytics</h3>
-          <p class="proj-desc">Internet Speed Analysis and Data Quality Validation projects using Pandas, NumPy, and Matplotlib for data cleaning, analysis, and visualization on CSV datasets.</p>
-          <div class="pill-group pill-group--sm">
-            <span class="pill">Python</span>
-            <span class="pill">Pandas</span>
-            <span class="pill">Matplotlib</span>
-          </div>
-          <!-- REPLACE: Update href with your GitHub repository link -->
-          <a href="#" class="proj-link">View on GitHub <span class="proj-arr">→</span></a>
-        </div>
-      </article>
-
-      <!-- Academic Projects -->
-      <article class="proj-card proj-card--academic" data-reveal>
-        <div class="proj-body proj-body--academic">
-          <span class="proj-badge proj-badge--inline">Academic Research</span>
-          <h3 class="proj-title">Statistical Research Projects</h3>
-          <p class="proj-desc">NFHS-4 Health Data Analysis applying statistical models to SDG-linked health data (M.Sc. dissertation at AMU). Road Safety Survey Analysis using visualization tools to present insights on accident risk factors (B.Sc. project).</p>
-          <div class="pill-group pill-group--sm">
-            <span class="pill">R</span>
-            <span class="pill">Statistical Models</span>
-            <span class="pill">SDG Analysis</span>
-            <span class="pill">Survey Methods</span>
-          </div>
-        </div>
-      </article>
-
-    </div><!-- /proj-grid -->
+    <div class="proj-grid" id="projGrid"></div><!-- /proj-grid -->
   </div>
 </section>
 
@@ -506,35 +210,7 @@
         <p class="eyebrow">Education</p>
         <h2 class="sec-heading">Academic<br>foundation</h2>
 
-        <div class="edu-list">
-          <div class="edu-item" data-reveal>
-            <div class="edu-l">
-              <time class="edu-year">2020 – 2022</time>
-            </div>
-            <div class="edu-r">
-              <h3 class="edu-degree">M.Sc. Statistics</h3>
-              <p class="edu-school">Aligarh Muslim University, Aligarh</p>
-              <div class="edu-bar-wrap">
-                <div class="edu-bar"><div class="edu-bar-fill" data-pct="90"></div></div>
-                <span class="edu-score">9.00 / 10.0</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="edu-item" data-reveal>
-            <div class="edu-l">
-              <time class="edu-year">2017 – 2020</time>
-            </div>
-            <div class="edu-r">
-              <h3 class="edu-degree">B.Sc. Statistics</h3>
-              <p class="edu-school">Aligarh Muslim University, Aligarh</p>
-              <div class="edu-bar-wrap">
-                <div class="edu-bar"><div class="edu-bar-fill" data-pct="90"></div></div>
-                <span class="edu-score">9.00 / 10.0</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div class="edu-list" id="eduList"></div>
       </div>
 
       <!-- Certifications -->
@@ -542,28 +218,7 @@
         <p class="eyebrow">Certifications</p>
         <h2 class="sec-heading">Continuous<br>learning</h2>
 
-        <div class="cert-list">
-          <div class="cert-item" data-reveal>
-            <span class="cert-icon" aria-hidden="true">◇</span>
-            <div class="cert-info">
-              <span class="cert-name">SQL Bootcamp</span>
-              <span class="cert-by">Udemy</span>
-            </div>
-            <span class="cert-badge">Certified</span>
-          </div>
-
-          <!--
-            ADD MORE CERTIFICATIONS — copy and paste this block:
-            <div class="cert-item" data-reveal>
-              <span class="cert-icon" aria-hidden="true">◇</span>
-              <div class="cert-info">
-                <span class="cert-name">Certification Name</span>
-                <span class="cert-by">Issuing Body · Year</span>
-              </div>
-              <span class="cert-badge">Certified</span>
-            </div>
-          -->
-        </div>
+        <div class="cert-list" id="certList"></div>
       </div>
 
     </div><!-- /edu-layout -->
@@ -580,42 +235,11 @@
 
       <!-- Left: info + links -->
       <div class="contact-info">
-        <p class="eyebrow eyebrow--lt">Contact</p>
-        <h2 class="sec-heading sec-heading--lt">Ready to bring<br>data to life</h2>
-        <p class="contact-sub">Open to Data Analyst roles, contract projects, and collaborations. Let's talk about how I can turn your data into decisions.</p>
+        <p class="eyebrow eyebrow--lt" id="contactEyebrow"></p>
+        <h2 class="sec-heading sec-heading--lt" id="contactHeading"></h2>
+        <p class="contact-sub" id="contactSub"></p>
 
-        <div class="contact-links">
-          <a href="mailto:namritasingh1218@gmail.com" class="clink">
-            <span class="clink-icon" aria-hidden="true">✉</span>
-            <span class="clink-body">
-              <span class="clink-label">Email</span>
-              <span class="clink-val">namritasingh1218@gmail.com</span>
-            </span>
-          </a>
-          <a href="tel:+917037036551" class="clink">
-            <span class="clink-icon" aria-hidden="true">☎</span>
-            <span class="clink-body">
-              <span class="clink-label">Phone</span>
-              <span class="clink-val">+91 7037036551</span>
-            </span>
-          </a>
-          <a href="https://www.linkedin.com/in/namrita-singh-ab08111b2" class="clink" target="_blank" rel="noopener noreferrer">
-            <span class="clink-icon" aria-hidden="true">in</span>
-            <span class="clink-body">
-              <span class="clink-label">LinkedIn</span>
-              <span class="clink-val">namrita-singh-ab08111b2</span>
-            </span>
-          </a>
-          <a href="https://github.com/namritasingh1218" class="clink" target="_blank" rel="noopener noreferrer">
-            <span class="clink-icon clink-icon--svg" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="currentColor" width="17" height="17"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-            </span>
-            <span class="clink-body">
-              <span class="clink-label">GitHub</span>
-              <span class="clink-val">namritasingh1218</span>
-            </span>
-          </a>
-        </div>
+        <div class="contact-links" id="contactLinks"></div>
       </div>
 
       <!-- Right: message form -->
@@ -649,15 +273,16 @@
 ════════════════════════════════════════════ -->
 <footer class="site-footer">
   <div class="footer-inner">
-    <span class="footer-name">Namrita Singh</span>
-    <span class="footer-role">Data Analyst · Built with intention</span>
-    <span class="footer-copy">© 2025</span>
+    <span class="footer-name" id="footerName"></span>
+    <span class="footer-role" id="footerRole"></span>
+    <span class="footer-copy" id="footerCopy"></span>
   </div>
 </footer>
 
 
 <!-- Lenis smooth scroll (CDN) -->
 <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script src="content.js"></script>
 <script src="script.js"></script>
 </body>
 </html>

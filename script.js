@@ -15,6 +15,434 @@
 
 'use strict';
 
+function createElement(tag, options = {}) {
+  const el = document.createElement(tag);
+  if (options.className) el.className = options.className;
+  if (options.text) el.textContent = options.text;
+  if (options.html) el.innerHTML = options.html;
+  if (options.attrs) {
+    Object.entries(options.attrs).forEach(([name, value]) => {
+      if (value === true) {
+        el.setAttribute(name, '');
+      } else if (value !== false && value != null) {
+        el.setAttribute(name, value);
+      }
+    });
+  }
+  return el;
+}
+
+function setText(id, text) {
+  const element = document.getElementById(id);
+  if (element) element.textContent = text;
+}
+
+function setHtml(id, html) {
+  const element = document.getElementById(id);
+  if (element) element.innerHTML = html;
+}
+
+function buildNav() {
+  if (!window.siteContent?.nav) return;
+  const navLinks = document.getElementById('navLinks');
+  const navDrawer = document.getElementById('navDrawer');
+  if (!navLinks || !navDrawer) return;
+
+  window.siteContent.nav.forEach(item => {
+    const link = createElement('a', {
+      className: `nav-link${item.classes ? ` ${item.classes}` : ''}`,
+      attrs: { href: `#${item.section}`, 'data-section': item.section },
+      text: item.text,
+    });
+
+    navLinks.appendChild(link);
+
+    const drawerLink = createElement('a', {
+      className: 'drawer-link',
+      attrs: { href: `#${item.section}` },
+      text: item.text,
+    });
+    navDrawer.appendChild(drawerLink);
+  });
+}
+
+function buildHero() {
+  if (!window.siteContent?.hero) return;
+
+  setText('heroStatus', window.siteContent.hero.status);
+  setText('heroNameSolid', window.siteContent.hero.name.first);
+  setText('heroNameOutline', window.siteContent.hero.name.last);
+  setText('heroSub', window.siteContent.hero.subtitle);
+
+  const rowsContainer = document.getElementById('tRowsContainer');
+  if (rowsContainer) {
+    rowsContainer.innerHTML = '';
+    window.siteContent.hero.terminal.rows.forEach(row => {
+      const rowEl = createElement('div', { className: 't-row' });
+      rowEl.innerHTML = `
+        <span class="t-key">${row.key}</span>
+        <span class="t-arr" aria-hidden="true">→</span>
+        <span class="t-val${row.active ? ' t-val--active' : ''}">${row.active ? `<span class="t-active-dot" aria-hidden="true"></span>${row.value}` : row.value}</span>
+      `;
+      rowsContainer.appendChild(rowEl);
+    });
+  }
+
+  setText('tMeta', window.siteContent.hero.terminal.meta);
+
+  const heroCtas = document.getElementById('heroCtas');
+  if (heroCtas) {
+    heroCtas.innerHTML = '';
+    window.siteContent.hero.ctas.forEach(cta => {
+      const attrs = { href: cta.href };
+      if (cta.download) attrs.download = true;
+      const button = createElement('a', {
+        className: cta.classes,
+        attrs,
+        text: cta.text,
+      });
+      heroCtas.appendChild(button);
+    });
+  }
+}
+
+function buildAbout() {
+  if (!window.siteContent?.about) return;
+
+  setText('aboutEyebrow', window.siteContent.about.eyebrow);
+  setHtml('aboutHeading', window.siteContent.about.heading);
+
+  const aboutBio = document.getElementById('aboutBio');
+  if (aboutBio) {
+    aboutBio.innerHTML = '';
+    window.siteContent.about.bio.forEach((paragraph, index) => {
+      const p = createElement('p', {
+        className: `about-bio${index === 0 ? ' about-bio--lead' : ''}`,
+        text: paragraph,
+      });
+      aboutBio.appendChild(p);
+    });
+  }
+
+  const aboutMetrics = document.getElementById('aboutMetrics');
+  if (aboutMetrics) {
+    aboutMetrics.innerHTML = '';
+    window.siteContent.about.metrics.forEach(metric => {
+      const metricEl = createElement('div', { className: 'metric' });
+      const num = createElement('span', {
+        className: 'metric-num',
+        text: '',
+        attrs: { 'data-count': metric.count, 'data-suffix': metric.suffix },
+      });
+      metricEl.appendChild(num);
+      metricEl.appendChild(createElement('span', { className: 'metric-lbl', text: metric.label }));
+      aboutMetrics.appendChild(metricEl);
+    });
+  }
+
+  const aboutPills = document.getElementById('aboutPills');
+  if (aboutPills) {
+    aboutPills.innerHTML = '';
+    window.siteContent.about.pills.forEach(text => {
+      aboutPills.appendChild(createElement('span', { className: 'pill', text }));
+    });
+  }
+
+  const aboutContacts = document.getElementById('aboutContacts');
+  if (aboutContacts) {
+    aboutContacts.innerHTML = '';
+    window.siteContent.about.contacts.forEach(contact => {
+      const contactLink = createElement('a', {
+        className: 'contact-chip',
+        attrs: { href: contact.href },
+        text: contact.label,
+      });
+      aboutContacts.appendChild(contactLink);
+    });
+  }
+
+  const profilePhoto = document.getElementById('profilePhoto');
+  if (profilePhoto && window.siteContent.about.photo) {
+    profilePhoto.src = window.siteContent.about.photo.src;
+    profilePhoto.alt = window.siteContent.about.photo.alt || '';
+  }
+}
+
+function buildSkills() {
+  if (!window.siteContent?.skills) return;
+  setText('skillRadar', '');
+  const skillCats = document.getElementById('skillCats');
+  if (!skillCats) return;
+
+  skillCats.innerHTML = '';
+  window.siteContent.skills.categories.forEach(category => {
+    const cat = createElement('div', { className: 'skill-cat', attrs: { 'data-reveal': true } });
+    cat.appendChild(createElement('h3', { className: 'cat-name', text: category.name }));
+
+    const tagGroup = createElement('div', { className: 'cat-tags' });
+    category.tags.forEach(tag => {
+      tagGroup.appendChild(createElement('span', {
+        className: `stag${tag.level === 'hi' ? ' stag--hi' : ''}`,
+        text: tag.text,
+      }));
+    });
+    cat.appendChild(tagGroup);
+
+    const track = createElement('div', { className: 'sbar-track' });
+    track.appendChild(createElement('div', {
+      className: 'sbar-fill',
+      attrs: { 'data-pct': String(category.pct) },
+    }));
+    cat.appendChild(track);
+    skillCats.appendChild(cat);
+  });
+}
+
+function buildExperience() {
+  if (!window.siteContent?.experience) return;
+
+  setText('ganttLabel', window.siteContent.experience.ganttLabel);
+  const expList = document.getElementById('expList');
+  if (!expList) return;
+
+  expList.innerHTML = '';
+  window.siteContent.experience.roles.forEach(role => {
+    const item = createElement('article', {
+      className: `exp-item${role.current ? ' exp-item--current' : ''}`,
+      attrs: { 'data-reveal': true },
+    });
+
+    item.innerHTML = `
+      <div class="exp-meta">
+        <time class="exp-date">${role.date}</time>
+        <span class="exp-loc">${role.location}</span>
+      </div>
+      <div class="exp-content">
+        <h3 class="exp-role">${role.title}</h3>
+        <p class="exp-co">${role.company}</p>
+        <p class="exp-desc">${role.desc}</p>
+      </div>
+    `;
+
+    const pillGroup = createElement('div', { className: 'pill-group pill-group--sm' });
+    role.tags.forEach(tag => pillGroup.appendChild(createElement('span', { className: 'pill', text: tag })));
+    item.querySelector('.exp-content').appendChild(pillGroup);
+
+    expList.appendChild(item);
+  });
+}
+
+function buildProjectThumb(type, label) {
+  const thumb = createElement('div', { className: `proj-thumb proj-thumb--${type}` });
+  const inner = createElement('div', { className: 'proj-thumb-ph' });
+  inner.appendChild(createElement('span', { className: 'proj-ph-label', text: label }));
+
+  if (type === 'sql') {
+    const bars = createElement('div', { className: 'proj-mini-bars', attrs: { 'aria-hidden': 'true' } });
+    [55, 82, 42, 95, 67, 78].forEach(height => {
+      bars.appendChild(createElement('div', { attrs: { style: `--h:${height}%` } }));
+    });
+    inner.appendChild(bars);
+  } else if (type === 'bi') {
+    inner.appendChild(createElement('div', { className: 'proj-mini-donut', attrs: { 'aria-hidden': 'true' } }));
+  } else if (type === 'py') {
+    const svg = createElement('svg', {
+      className: 'proj-mini-line',
+      attrs: { viewBox: '0 0 180 58', 'aria-hidden': 'true' },
+    });
+    svg.innerHTML = `
+      <polyline points="0,50 28,38 56,22 84,30 112,10 140,16 168,4"
+        fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" />
+      <circle cx="168" cy="4" r="4" fill="currentColor" />
+    `;
+    inner.appendChild(svg);
+  }
+
+  thumb.appendChild(inner);
+  thumb.appendChild(createElement('span', { className: 'proj-badge', text: label.split(' · ')[0] }));
+  return thumb;
+}
+
+function buildProjects() {
+  if (!window.siteContent?.projects) return;
+
+  const projGrid = document.getElementById('projGrid');
+  if (!projGrid) return;
+
+  projGrid.innerHTML = '';
+  window.siteContent.projects.cards.forEach(card => {
+    const article = createElement('article', {
+      className: `proj-card${card.type === 'academic' ? ' proj-card--academic' : ''}`,
+      attrs: { 'data-reveal': true },
+    });
+
+    if (card.type !== 'academic') {
+      article.appendChild(buildProjectThumb(card.type, card.badge));
+    }
+
+    const body = createElement('div', {
+      className: `proj-body${card.type === 'academic' ? ' proj-body--academic' : ''}`,
+    });
+
+    if (card.type === 'academic') {
+      body.appendChild(createElement('span', { className: 'proj-badge proj-badge--inline', text: card.badge }));
+    }
+
+    body.appendChild(createElement('h3', { className: 'proj-title', text: card.title }));
+    body.appendChild(createElement('p', { className: 'proj-desc', text: card.desc }));
+
+    if (card.tags?.length) {
+      const pillGroup = createElement('div', { className: 'pill-group pill-group--sm' });
+      card.tags.forEach(tag => pillGroup.appendChild(createElement('span', { className: 'pill', text: tag })));
+      body.appendChild(pillGroup);
+    }
+
+    if (card.href) {
+      const link = createElement('a', {
+        className: 'proj-link',
+        attrs: { href: card.href },
+        text: `${card.linkText} `,
+      });
+      link.appendChild(createElement('span', { className: 'proj-arr', text: '→' }));
+      body.appendChild(link);
+    }
+
+    article.appendChild(body);
+    projGrid.appendChild(article);
+  });
+}
+
+function buildEducation() {
+  if (!window.siteContent?.education) return;
+
+  const eduList = document.getElementById('eduList');
+  if (eduList) {
+    eduList.innerHTML = '';
+    window.siteContent.education.entries.forEach(entry => {
+      const item = createElement('div', { className: 'edu-item', attrs: { 'data-reveal': true } });
+      item.innerHTML = `
+        <div class="edu-l">
+          <time class="edu-year">${entry.year}</time>
+        </div>
+        <div class="edu-r">
+          <h3 class="edu-degree">${entry.degree}</h3>
+          <p class="edu-school">${entry.school}</p>
+          <div class="edu-bar-wrap">
+            <div class="edu-bar"><div class="edu-bar-fill" data-pct="${entry.pct}"></div></div>
+            <span class="edu-score">${entry.score}</span>
+          </div>
+        </div>
+      `;
+      eduList.appendChild(item);
+    });
+  }
+
+  const certList = document.getElementById('certList');
+  if (certList) {
+    certList.innerHTML = '';
+    window.siteContent.education.certifications.forEach(cert => {
+      const item = createElement('div', { className: 'cert-item', attrs: { 'data-reveal': true } });
+      item.innerHTML = `
+        <span class="cert-icon" aria-hidden="true">◇</span>
+        <div class="cert-info">
+          <span class="cert-name">${cert.name}</span>
+          <span class="cert-by">${cert.by}</span>
+        </div>
+        <span class="cert-badge">${cert.badge}</span>
+      `;
+      certList.appendChild(item);
+    });
+  }
+}
+
+function buildContact() {
+  if (!window.siteContent?.contact) return;
+
+  setText('contactEyebrow', window.siteContent.contact.eyebrow);
+  setText('contactHeading', window.siteContent.contact.heading);
+  setText('contactSub', window.siteContent.contact.subtext);
+
+  const contactLinks = document.getElementById('contactLinks');
+  if (contactLinks) {
+    contactLinks.innerHTML = '';
+    window.siteContent.contact.links.forEach(link => {
+      const attrs = { href: link.href };
+      if (link.external) {
+        attrs.target = '_blank';
+        attrs.rel = 'noopener noreferrer';
+      }
+
+      const anchor = createElement('a', { className: 'clink', attrs });
+      let iconHtml = '';
+      if (link.type === 'email') iconHtml = '✉';
+      else if (link.type === 'phone') iconHtml = '☎';
+      else if (link.type === 'linkedin') iconHtml = 'in';
+      else if (link.type === 'github') iconHtml = '<svg viewBox="0 0 24 24" fill="currentColor" width="17" height="17"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>';
+      const icon = createElement('span', {
+        className: link.type === 'github' ? 'clink-icon clink-icon--svg' : 'clink-icon',
+        html: iconHtml,
+        attrs: { 'aria-hidden': 'true' },
+      });
+      anchor.appendChild(icon);
+
+      const body = createElement('span', { className: 'clink-body' });
+      body.appendChild(createElement('span', { className: 'clink-label', text: link.label }));
+      body.appendChild(createElement('span', { className: 'clink-val', text: link.value }));
+      anchor.appendChild(body);
+      contactLinks.appendChild(anchor);
+    });
+  }
+
+  const form = window.siteContent.contact.form;
+  if (form) {
+    const labelName = document.querySelector('label[for="fName"]');
+    const labelEmail = document.querySelector('label[for="fEmail"]');
+    const labelMsg = document.querySelector('label[for="fMsg"]');
+    if (labelName) labelName.textContent = form.nameLabel;
+    if (labelEmail) labelEmail.textContent = form.emailLabel;
+    if (labelMsg) labelMsg.textContent = form.messageLabel;
+
+    const inputName = document.getElementById('fName');
+    const inputEmail = document.getElementById('fEmail');
+    const inputMsg = document.getElementById('fMsg');
+    if (inputName) inputName.placeholder = form.namePlaceholder;
+    if (inputEmail) inputEmail.placeholder = form.emailPlaceholder;
+    if (inputMsg) inputMsg.placeholder = form.messagePlaceholder;
+
+    const button = document.getElementById('formBtn');
+    if (button) button.textContent = form.buttonText;
+
+    const note = document.querySelector('.cform-note');
+    if (note) note.textContent = form.note;
+  }
+}
+
+function buildFooter() {
+  if (!window.siteContent?.footer) return;
+  setText('footerName', window.siteContent.footer.name);
+  setText('footerRole', window.siteContent.footer.role);
+  setText('footerCopy', window.siteContent.footer.copyright);
+}
+
+function populateContent() {
+  if (!window.siteContent) return;
+  document.title = window.siteContent.meta.title;
+  const metaDescription = document.querySelector('meta[name="description"]');
+  if (metaDescription) {
+    metaDescription.setAttribute('content', window.siteContent.meta.description);
+  }
+
+  buildNav();
+  buildHero();
+  buildAbout();
+  buildSkills();
+  buildExperience();
+  buildProjects();
+  buildEducation();
+  buildContact();
+  buildFooter();
+}
+
 
 /* ─────────────────────────────────────────────
    1. LENIS SMOOTH SCROLL
@@ -37,6 +465,8 @@ try {
 } catch (e) {
   console.warn('Lenis not available — using native scroll.');
 }
+
+populateContent();
 
 /* Smooth anchor scrolling */
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -111,9 +541,8 @@ document.querySelectorAll('section[id]').forEach(s => sectionObs.observe(s));
 ───────────────────────────────────────────── */
 const tCode    = document.getElementById('tCode');
 const tResults = document.getElementById('tResults');
-const tRows    = document.querySelectorAll('.t-row');
 
-const sqlQuery =
+const sqlQuery = window.siteContent?.hero?.terminal?.query ||
 `SELECT  name, role, experience, status
 FROM    candidates
 WHERE   expertise IN ('SQL', 'Power BI', 'Python')
@@ -141,7 +570,8 @@ function typeNextChar() {
 function revealResults() {
   if (!tResults) return;
   tResults.style.display = 'block';
-  tRows.forEach((row, i) => {
+  const rows = tResults.querySelectorAll('.t-row');
+  rows.forEach((row, i) => {
     setTimeout(() => row.classList.add('is-visible'), i * 210 + 60);
   });
 }
